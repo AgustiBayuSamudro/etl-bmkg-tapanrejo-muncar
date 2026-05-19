@@ -169,7 +169,7 @@ services:
     environment:
       - SPARK_MODE=client
     volumes:
-      - /home/agusti/BookToScrape/scripts:/opt/spark/scripts      
+      - /home/agusti/etl-bmkg-tapanrejo-muncar/scripts:/opt/spark/scripts      
     command: >
       spark-submit
           --master spark://spark-master:7077
