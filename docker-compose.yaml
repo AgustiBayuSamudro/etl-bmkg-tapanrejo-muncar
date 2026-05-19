@@ -174,7 +174,7 @@ services:
       spark-submit
           --master spark://spark-master:7077
           --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,org.apache.hadoop:hadoop-aws:3.3.4
-          /opt/spark/scripts/streaming/customer_kafka_to_raw.py
+          /opt/spark/scripts/customer/kafka_to_minio_streaming.py
     depends_on:
       - kafka
       - minio
