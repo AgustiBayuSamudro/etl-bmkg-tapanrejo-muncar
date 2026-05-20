@@ -23,4 +23,15 @@ with DAG(
         python_callable=trigger_producer
     )
 
-ingest_task
+    bronze_task = BashOperator(
+        task_id='transform_raw_to_bronze',
+        bash_command="""
+        spark-submit \
+        --driver-memory 512m \
+        --executor-memory 512m \
+        --packages org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026 \
+        /opt/airflow/scripts/spark/bronze/bmkg_bronze.py
+        """
+    )
+
+ingest_task >> bronze_task
