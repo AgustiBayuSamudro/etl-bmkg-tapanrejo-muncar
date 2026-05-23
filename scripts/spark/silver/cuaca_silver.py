@@ -24,7 +24,7 @@ df_raw.createOrReplaceTempView("silver_cuaca")
 # SQL Transform
 df_silver = spark.sql("""
     SELECT DISTINCT
-        hex(md5((local_datetime || weather_desc))) AS lokasi_id,
+        hex(md5((local_datetime || weather_desc))) AS cuaca_id,
         CAST(REPLACE(REPLACE(datetime, 'T', ' '), 'Z', '') AS TIMESTAMP) AS datetime,
         CAST(local_datetime AS TIMESTAMP) AS local_datetime,
         CAST(t AS INTEGER) AS temperature,
