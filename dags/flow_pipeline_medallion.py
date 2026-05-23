@@ -34,4 +34,26 @@ with DAG(
         """
     )
 
-ingest_task >> bronze_task
+    cuaca_task = BashOperator(
+        task_id='transform_bronze_to_silver_cuaca',
+        bash_command="""
+        spark-submit \
+        --driver-memory 512m \
+        --executor-memory 512m \
+        --packages org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026 \
+        /opt/airflow/scripts/spark/silver/cuaca_silver.py
+        """
+    )
+
+    lokasi_task = BashOperator(
+        task_id='transform_bronze_to_silver_lokasi',
+        bash_command="""
+        spark-submit \
+        --driver-memory 512m \
+        --executor-memory 512m \
+        --packages org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026 \
+        /opt/airflow/scripts/spark/silver/lokasi_silver.py
+        """
+    )
+
+ingest_task >> bronze_task >> [cuaca_task, lokasi_task]

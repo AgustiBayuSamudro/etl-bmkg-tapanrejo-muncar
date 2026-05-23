@@ -29,8 +29,7 @@ df_bronze = spark.sql(f"""
         SELECT from_json(value, '{json_ddl_schema}') AS parsed
         FROM raw_bmkg
     ),
-    flattened_lokasi AS (
-        -- Isolasi dan amankan kolom-kolom tingkat atas dulu di sini
+    flattened_lokasi AS (        
         SELECT 
             parsed.lokasi.provinsi AS provinsi,
             parsed.lokasi.kotkab AS kotkab,
